@@ -1,4 +1,4 @@
-package org.artem.entities;
+package org.artem.courses.entity;
 
 import java.util.List;
 
@@ -8,6 +8,15 @@ public class Section {
     private String name;
     private String description;
     private List<Topic> topics;
+    private Integer order;
+
+    public Integer getOrder() {
+        return order;
+    }
+
+    public void setOrder(Integer order) {
+        this.order = order;
+    }
 
     public Integer getId() {
         return id;

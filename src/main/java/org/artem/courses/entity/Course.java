@@ -1,9 +1,12 @@
-package org.artem.entities;
+package org.artem.courses.entity;
+
+import java.util.List;
+
 public class Course {
     private Integer id;
     private String name;
     private String description;
-    private Section section;
+    private List<Section> sections;
     private Author author;
 
     public Integer getId() {
@@ -30,12 +33,12 @@ public class Course {
         this.description = description;
     }
 
-    public Section getSection() {
-        return section;
+    public List<Section> getSections() {
+        return sections;
     }
 
-    public void setSection(Section section) {
-        this.section = section;
+    public void setSections(List<Section> sections) {
+        this.sections = sections;
     }
 
     public Author getAuthor() {

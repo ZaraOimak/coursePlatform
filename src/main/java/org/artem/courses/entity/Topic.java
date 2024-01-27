@@ -1,4 +1,4 @@
-package org.artem.entities;
+package org.artem.courses.entity;
 
 import java.util.List;
 
@@ -7,8 +7,25 @@ public class Topic {
     private Section section;
     private String name;
     private String description;
-    private String prevLink;
-    private String nextLink;
+    private Topic previous;
+    private Topic next;
+
+    public Topic getPrevious() {
+        return previous;
+    }
+
+    public void setPrevious(Topic previous) {
+        this.previous = previous;
+    }
+
+    public Topic getNext() {
+        return next;
+    }
+
+    public void setNext(Topic next) {
+        this.next = next;
+    }
+
     private List<Block> blocks;
     private Integer order;
 
@@ -42,22 +59,6 @@ public class Topic {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public String getPrevLink() {
-        return prevLink;
-    }
-
-    public void setPrevLink(String prevLink) {
-        this.prevLink = prevLink;
-    }
-
-    public String getNextLink() {
-        return nextLink;
-    }
-
-    public void setNextLink(String nextLink) {
-        this.nextLink = nextLink;
     }
 
     public List<Block> getBlocks() {

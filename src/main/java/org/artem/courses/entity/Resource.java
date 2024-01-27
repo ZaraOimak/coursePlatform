@@ -1,9 +1,9 @@
-package org.artem.entities;
+package org.artem.courses.entity;
 public class Resource {
     private Block parent;
     private Integer id;
     private Integer order;
-    private String type;
+    private ResourceType resourceType;
     private String content;
 
     public Block getParent() {
@@ -22,20 +22,20 @@ public class Resource {
         this.id = id;
     }
 
+    public ResourceType getResourceType() {
+        return resourceType;
+    }
+
+    public void setResourceType(ResourceType resourceType) {
+        this.resourceType = resourceType;
+    }
+
     public Integer getOrder() {
         return order;
     }
 
     public void setOrder(Integer order) {
         this.order = order;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
     }
 
     public String getContent() {

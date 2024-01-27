@@ -1,4 +1,4 @@
-package org.artem.entities;
+package org.artem.courses.entity;
 
 public class Author {
     private Integer id;
