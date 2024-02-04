@@ -9,7 +9,7 @@ public interface TopicService {
     void delete(Integer id);
 
     Topic update(Topic topic);
-    Topic create(Integer courseId,Integer sectionOrder, Topic topic);
+    Topic create(Integer courseId,Topic topic);
 
     Topic getById(Integer id);
 

@@ -1,5 +1,6 @@
 package org.artem.courses.entity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Topic {
@@ -9,7 +10,7 @@ public class Topic {
     private String description;
     private Topic previous;
     private Topic next;
-    private List<Block> blocks;
+    private List<Block> blocks = new ArrayList<>();
     private Integer order;
 
     public Topic getPrevious() {

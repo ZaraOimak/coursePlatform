@@ -1,12 +1,13 @@
 package org.artem.courses.entity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Block {
     private Integer id;
     private Topic topic;
     private Integer order;
-    private List <Resource> resources;
+    private List <Resource> resources = new ArrayList<>();
 
     public List<Resource> getResources() {
         return resources;

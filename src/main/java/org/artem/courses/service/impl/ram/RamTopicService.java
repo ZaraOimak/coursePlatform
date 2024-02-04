@@ -34,16 +34,11 @@ public class RamTopicService implements TopicService {
     }
 
     @Override
-    public Topic create(Integer courseId, Integer sectionOrder, Topic topic) {
+    public Topic create(Integer courseId, Topic topic) {
         if(courseId == null || !ramManager.getCourses().containsKey(courseId)){
             throw new IllegalArgumentException();
         }
-        Course course = ramManager.getCourses().get(courseId);
-        for(Section section : course.getSections()){
-            if(sectionOrder.equals(section.getOrder())){
-                topic.setSection(section);
-            }
-        }
+
         topic.setId(ramManager.getNewTopicId());
         ramManager.getTopics().put(topic.getId(),topic);
         return topic;
