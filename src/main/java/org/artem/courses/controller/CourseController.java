@@ -5,10 +5,10 @@ import org.artem.courses.service.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+
 @RestController
 @RequestMapping("/courses")
 
@@ -27,31 +27,30 @@ public class CourseController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Course> getCourseById(int id) {
+    public ResponseEntity<Course> getCourseById(@PathVariable("id") int id) {
         Course course = courseService.getById(id);
-        if(course != null){
+        if (course != null) {
             return new ResponseEntity<>(course, HttpStatus.OK);
-        }
-        else{
+        } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
 
     @PostMapping
-    public ResponseEntity<Course> createCourse(Course course) {
+    public ResponseEntity<Course> createCourse(@RequestBody Course course) {
         Course createdCourse = courseService.update(course);
         return new ResponseEntity<>(createdCourse, HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Course> updateCourse(int id,Course updatedCourse) {
+    public ResponseEntity<Course> updateCourse(@PathVariable("id") int id, @RequestBody Course updatedCourse) {
         updatedCourse.setId(id);
         Course resultCourse = courseService.update(updatedCourse);
         return new ResponseEntity<>(resultCourse, HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteCourse(int id) {
+    public ResponseEntity<Void> deleteCourse(@PathVariable("id") int id) {
         courseService.delete(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }

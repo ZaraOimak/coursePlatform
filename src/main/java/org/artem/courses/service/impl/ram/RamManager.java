@@ -3,11 +3,12 @@ package org.artem.courses.service.impl.ram;
 import org.artem.courses.entity.Author;
 import org.artem.courses.entity.Course;
 import org.artem.courses.entity.Topic;
+import org.springframework.stereotype.Service;
 
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
-
+@Service
 public class RamManager {
     private final Map<Integer, Author> authors = new HashMap<>();
     private final Map<Integer, Course> courses = new HashMap<>();

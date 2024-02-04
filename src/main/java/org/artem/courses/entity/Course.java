@@ -1,12 +1,13 @@
 package org.artem.courses.entity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Course {
     private Integer id;
     private String name;
     private String description;
-    private List<Section> sections;
+    private List<Section> sections = new ArrayList<>();
     private Author author;
 
     public Integer getId() {

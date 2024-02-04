@@ -1,13 +1,17 @@
 package org.artem.courses.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import java.util.ArrayList;
 import java.util.List;
 
 public class Section {
     private Integer id;
+    @JsonIgnore
     private Course course;
     private String name;
     private String description;
-    private List<Topic> topics;
+    private List<Topic> topics = new ArrayList<>();
     private Integer order;
 
     public Integer getOrder() {

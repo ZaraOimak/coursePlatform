@@ -5,10 +5,11 @@ import org.artem.courses.entity.Section;
 import org.artem.courses.entity.Topic;
 import org.artem.courses.service.CourseService;
 import org.artem.courses.service.TopicService;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-
+@Service
 public class RamCourseService implements CourseService {
     private final RamManager ramManager;
     private final TopicService topicService;
@@ -33,6 +34,9 @@ public class RamCourseService implements CourseService {
     public Course update(Course course) {
         if (course.getId() == null) {
             course.setId(ramManager.getNewCourseId());
+        }
+        for(Section section : course.getSections()){
+            section.setCourse(course);
         }
         ramManager.getCourses().put(course.getId(), course);
         return course;

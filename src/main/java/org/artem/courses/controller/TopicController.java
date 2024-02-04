@@ -9,8 +9,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+
 @RestController
-@RequestMapping("/topics")
+@RequestMapping("/courses/{course_id}")
 public class TopicController {
     private final TopicService topicService;
 
@@ -19,14 +20,14 @@ public class TopicController {
         this.topicService = topicService;
     }
 
-    @GetMapping
-    public ResponseEntity<List<Topic>> getAllTopics() {
-        List<Topic> topics = topicService.getAll();
+    @GetMapping("/topics")
+    public ResponseEntity<List<Topic>> getAllTopics(@PathVariable("course_id") int courseId) {
+        List<Topic> topics = topicService.getAll(courseId);
         return new ResponseEntity<>(topics, HttpStatus.OK);
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Topic> getTopicById(int id) {
+    @GetMapping("/topics/{id}")
+    public ResponseEntity<Topic> getTopicById(@PathVariable("id") int id, @PathVariable String course_id) {
         Topic topic = topicService.getById(id);
         if (topic != null) {
             return new ResponseEntity<>(topic, HttpStatus.OK);
@@ -35,21 +36,22 @@ public class TopicController {
         }
     }
 
-    @PostMapping
-    public ResponseEntity<Topic> createTopic(Topic topic) {
-        Topic createdTopic = topicService.update(topic);
+    @PostMapping("/{section_order}/topics")
+    public ResponseEntity<Topic> createTopic(@PathVariable("course_id") int courseId,@PathVariable("section_order") int sectionOrder, @RequestBody Topic topic) {
+
+        Topic createdTopic = topicService.create(courseId,sectionOrder, topic);
         return new ResponseEntity<>(createdTopic, HttpStatus.CREATED);
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<Topic> updateTopic(int id,Topic updatedTopic) {
+    @PutMapping("topics/{id}")
+    public ResponseEntity<Topic> updateTopic(@PathVariable("id") int id, @RequestBody Topic updatedTopic, @PathVariable String course_id) {
         updatedTopic.setId(id);
         Topic resultTopic = topicService.update(updatedTopic);
         return new ResponseEntity<>(resultTopic, HttpStatus.OK);
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteTopic(int id) {
+    @DeleteMapping("topics/{id}")
+    public ResponseEntity<Void> deleteTopic(@PathVariable("id") int id, @PathVariable String course_id) {
         topicService.delete(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
