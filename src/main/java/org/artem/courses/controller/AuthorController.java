@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/authors")
@@ -35,9 +36,9 @@ public class AuthorController {
         return new ResponseEntity<>(authorsDTO, HttpStatus.OK);
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<AuthorDTO> getAuthorById(@PathVariable("id") int id) {
-        Author author = authorService.getById(id);
+    @GetMapping("/{uuid}")
+    public ResponseEntity<AuthorDTO> getAuthorById(@PathVariable("uuid") UUID uuid) {
+        Author author = authorService.getByUuid(uuid);
         if (author != null) {
             return new ResponseEntity<>(transform(author), HttpStatus.OK);
         } else {
@@ -51,16 +52,16 @@ public class AuthorController {
         return new ResponseEntity<>(transform(resultAuthor), HttpStatus.OK);
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteAuthor(@PathVariable("id") int id) {
-        authorService.delete(id);
+    @DeleteMapping("/{uuid}")
+    public ResponseEntity<Void> deleteAuthor(@PathVariable("uuid") UUID uuid) {
+        authorService.delete(uuid);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     private AuthorDTO transform(Author author) {
         AuthorDTO authorDTO = new AuthorDTO();
         authorDTO.setName(author.getName());
-        authorDTO.setId(author.getId());
+        authorDTO.setUuid(author.getUuid());
         List<Integer> coursesIds = new ArrayList<>();
         for (Course course : author.getCourses()) {
             coursesIds.add(course.getId());
@@ -72,8 +73,7 @@ public class AuthorController {
     private Author transform(AuthorDTO authorDTO) {
         Author author = new Author();
         author.setName(authorDTO.getName());
-        author.setId(authorDTO.getId());
-
+        author.setUuid(authorDTO.getUuid());
         List<Course> courses = new ArrayList<>();
         for (Integer courseId : authorDTO.getCoursesIds()) {
             courses.add(courseService.getById(courseId));

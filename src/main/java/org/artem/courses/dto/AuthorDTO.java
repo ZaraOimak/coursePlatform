@@ -1,22 +1,22 @@
 package org.artem.courses.dto;
 
-import org.artem.courses.entity.Course;
-
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class AuthorDTO {
-    private Integer id;
+    private UUID uuid;
+
+    public UUID getUuid() {
+        return uuid;
+    }
+
+    public void setUuid(UUID uuid) {
+        this.uuid = uuid;
+    }
+
     private String name;
     private List<Integer> coursesIds = new ArrayList<>();
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
 
     public String getName() {
         return name;

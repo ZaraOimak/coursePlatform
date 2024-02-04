@@ -5,12 +5,22 @@ import org.artem.courses.entity.Section;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class CourseDTO {
     private Integer id;
     private String name;
     private String description;
-    private Integer authorId;
+    private UUID authorUuid;
+
+    public UUID getAuthorUuid() {
+        return authorUuid;
+    }
+
+    public void setAuthorUuid(UUID authorUuid) {
+        this.authorUuid = authorUuid;
+    }
+
     private List<SectionDTO> sections = new ArrayList<>();
 
     public List<SectionDTO> getSections() {
@@ -20,7 +30,6 @@ public class CourseDTO {
     public void setSections(List<SectionDTO> sections) {
         this.sections = sections;
     }
-
 
 
     public Integer getId() {
@@ -47,11 +56,4 @@ public class CourseDTO {
         this.description = description;
     }
 
-    public Integer getAuthorId() {
-        return authorId;
-    }
-
-    public void setAuthorId(Integer authorId) {
-        this.authorId = authorId;
-    }
 }

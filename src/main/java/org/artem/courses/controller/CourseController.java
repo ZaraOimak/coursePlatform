@@ -69,7 +69,7 @@ public class CourseController {
         courseDTO.setId(course.getId());
         courseDTO.setName(course.getName());
         courseDTO.setDescription(course.getDescription());
-        courseDTO.setAuthorId(course.getAuthor().getId());
+        courseDTO.setAuthorUuid(course.getAuthor().getUuid());
 
         List <SectionDTO> sections = new ArrayList<>();
         for(Section section : course.getSections()){
@@ -99,7 +99,7 @@ public class CourseController {
         course.setName(courseDTO.getName());
         course.setDescription(courseDTO.getDescription());
 
-        course.setAuthor(authorService.getById(courseDTO.getAuthorId()));
+        course.setAuthor(authorService.getByUuid(courseDTO.getAuthorUuid()));
         List<Section> sections = new ArrayList<>();
         for(SectionDTO sectionDTO : courseDTO.getSections()){
             sections.add(transform(sectionDTO,course));

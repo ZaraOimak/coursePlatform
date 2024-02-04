@@ -8,11 +8,30 @@ import org.springframework.stereotype.Service;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
+
 @Service
 public class RamManager {
     private final Map<Integer, Author> authors = new HashMap<>();
     private final Map<Integer, Course> courses = new HashMap<>();
     private final Map<Integer, Topic> topics = new HashMap<>();
+     private final Map<UUID, Author> authorsByUuid = new HashMap<>();
+
+    public Map<UUID, Author> getAuthorsByUuid() {
+        return authorsByUuid;
+    }
+
+    public Map<UUID, Course> getCoursesByUuid() {
+        return coursesByUuid;
+    }
+
+    public Map<UUID, Topic> getTopicsByUuid() {
+        return topicsByUuid;
+    }
+
+    private final Map<UUID, Course> coursesByUuid  = new HashMap<>();
+    private final Map<UUID, Topic> topicsByUuid  = new HashMap<>();
+
 
     public Map<Integer, Author> getAuthors() {
         return authors;
