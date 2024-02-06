@@ -8,10 +8,19 @@ import java.util.List;
 import java.util.UUID;
 
 public class CourseDTO {
-    private Integer id;
     private String name;
     private String description;
     private UUID authorUuid;
+    private UUID uuid;
+
+    public UUID getUuid() {
+        return uuid;
+    }
+
+    public void setUuid(UUID uuid) {
+        this.uuid = uuid;
+    }
+
 
     public UUID getAuthorUuid() {
         return authorUuid;
@@ -29,15 +38,6 @@ public class CourseDTO {
 
     public void setSections(List<SectionDTO> sections) {
         this.sections = sections;
-    }
-
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
     }
 
     public String getName() {

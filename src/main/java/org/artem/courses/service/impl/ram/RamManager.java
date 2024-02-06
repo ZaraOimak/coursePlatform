@@ -16,6 +16,9 @@ public class RamManager {
     private final Map<Integer, Course> courses = new HashMap<>();
     private final Map<Integer, Topic> topics = new HashMap<>();
      private final Map<UUID, Author> authorsByUuid = new HashMap<>();
+    private final Map<UUID, Course> coursesByUuid  = new HashMap<>();
+    private final Map<UUID, Topic> topicsByUuid  = new HashMap<>();
+
 
     public Map<UUID, Author> getAuthorsByUuid() {
         return authorsByUuid;
@@ -28,10 +31,6 @@ public class RamManager {
     public Map<UUID, Topic> getTopicsByUuid() {
         return topicsByUuid;
     }
-
-    private final Map<UUID, Course> coursesByUuid  = new HashMap<>();
-    private final Map<UUID, Topic> topicsByUuid  = new HashMap<>();
-
 
     public Map<Integer, Author> getAuthors() {
         return authors;

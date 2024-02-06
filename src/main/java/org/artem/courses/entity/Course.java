@@ -2,13 +2,23 @@ package org.artem.courses.entity;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class Course {
     private Integer id;
+    private UUID uuid;
     private String name;
     private String description;
     private List<Section> sections = new ArrayList<>();
     private Author author;
+
+    public UUID getUuid() {
+        return uuid;
+    }
+
+    public void setUuid(UUID uuid) {
+        this.uuid = uuid;
+    }
 
     public Integer getId() {
         return id;

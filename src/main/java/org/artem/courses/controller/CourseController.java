@@ -1,6 +1,5 @@
 package org.artem.courses.controller;
 
-import ch.qos.logback.core.CoreConstants;
 import org.artem.courses.dto.CourseDTO;
 import org.artem.courses.dto.SectionDTO;
 import org.artem.courses.entity.Course;
@@ -16,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/courses")
@@ -23,7 +23,6 @@ import java.util.List;
 public class CourseController {
     private final CourseService courseService;
     private final TopicService topicService;
-
     private final AuthorService authorService;
 
     @Autowired
@@ -37,15 +36,15 @@ public class CourseController {
     public ResponseEntity<List<CourseDTO>> getAllCourses() {
         List<Course> courses = courseService.getAll();
         List<CourseDTO> courseDTOS = new ArrayList<>();
-        for (Course course : courses){
+        for (Course course : courses) {
             courseDTOS.add(transform(course));
         }
         return new ResponseEntity<>(courseDTOS, HttpStatus.OK);
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<CourseDTO> getCourseById(@PathVariable("id") int id) {
-        Course course = courseService.getById(id);
+    @GetMapping("/{uuid}")
+    public ResponseEntity<CourseDTO> getCourseById(@PathVariable("uuid") UUID uuid) {
+        Course course = courseService.getByUuid(uuid);
         if (course != null) {
             return new ResponseEntity<>(transform(course), HttpStatus.OK);
         } else {
@@ -59,20 +58,21 @@ public class CourseController {
         return new ResponseEntity<>(transform(createdCourse), HttpStatus.CREATED);
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteCourse(@PathVariable("id") int id) {
-        courseService.delete(id);
+    @DeleteMapping("/{uuid}")
+    public ResponseEntity<Void> deleteCourse(@PathVariable("uuid") UUID uuid) {
+        courseService.delete(uuid);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
-    private CourseDTO transform (Course course){
+
+    private CourseDTO transform(Course course) {
         CourseDTO courseDTO = new CourseDTO();
-        courseDTO.setId(course.getId());
+        courseDTO.setUuid(course.getUuid());
         courseDTO.setName(course.getName());
         courseDTO.setDescription(course.getDescription());
         courseDTO.setAuthorUuid(course.getAuthor().getUuid());
 
-        List <SectionDTO> sections = new ArrayList<>();
-        for(Section section : course.getSections()){
+        List<SectionDTO> sections = new ArrayList<>();
+        for (Section section : course.getSections()) {
             sections.add(transform(section));
         }
         courseDTO.setSections(sections);
@@ -81,28 +81,29 @@ public class CourseController {
 
     private SectionDTO transform(Section section) {
         SectionDTO sectionDTO = new SectionDTO();
-        sectionDTO.setId(section.getId());
+        sectionDTO.setUuid(section.getUuid());
         sectionDTO.setName(section.getName());
         sectionDTO.setOrder(section.getOrder());
         sectionDTO.setDescription(section.getDescription());
 
         List<Integer> topicsIds = new ArrayList<>();
-        for(Topic topic : section.getTopics()){
+        for (Topic topic : section.getTopics()) {
             topicsIds.add(topic.getId());
         }
         sectionDTO.setTopicsIds(topicsIds);
         return sectionDTO;
     }
-    private Course transform(CourseDTO courseDTO){
+
+    private Course transform(CourseDTO courseDTO) {
         Course course = new Course();
-        course.setId(courseDTO.getId());
+        course.setUuid(courseDTO.getUuid());
         course.setName(courseDTO.getName());
         course.setDescription(courseDTO.getDescription());
 
         course.setAuthor(authorService.getByUuid(courseDTO.getAuthorUuid()));
         List<Section> sections = new ArrayList<>();
-        for(SectionDTO sectionDTO : courseDTO.getSections()){
-            sections.add(transform(sectionDTO,course));
+        for (SectionDTO sectionDTO : courseDTO.getSections()) {
+            sections.add(transform(sectionDTO, course));
         }
         course.setSections(sections);
         return course;
@@ -110,13 +111,13 @@ public class CourseController {
 
     private Section transform(SectionDTO sectionDTO, Course course) {
         Section section = new Section();
-        section.setId(sectionDTO.getId());
+        section.setUuid(sectionDTO.getUuid());
         section.setName(sectionDTO.getName());
         section.setOrder(sectionDTO.getOrder());
         section.setDescription(sectionDTO.getDescription());
         section.setCourse(course);
         List<Topic> topics = new ArrayList<>();
-        for(Integer topicId : sectionDTO.getTopicsIds()){
+        for (Integer topicId : sectionDTO.getTopicsIds()) {
             topics.add(topicService.getById(topicId));
         }
         section.setTopics(topics);
