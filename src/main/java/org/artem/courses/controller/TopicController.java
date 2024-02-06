@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.UUID;
 
 
 @RestController
@@ -29,8 +30,8 @@ public class TopicController {
     }
 
     @GetMapping
-    public ResponseEntity<List<TopicDTO>> getAllTopics(@PathVariable("course_id") int courseId) {
-        List<Topic> topics = topicService.getAll(courseId);
+    public ResponseEntity<List<TopicDTO>> getAllTopics(@PathVariable("course_uuid") UUID courseUuid) {
+        List<Topic> topics = topicService.getAll(courseUuid);
         List<TopicDTO> topicDTOS = new ArrayList<>();
         for (Topic topic : topics){
             topicDTOS.add(transform(topic));
@@ -38,9 +39,9 @@ public class TopicController {
         return new ResponseEntity<>(topicDTOS, HttpStatus.OK);
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<TopicDTO> getTopicById(@PathVariable("id") int id, @PathVariable("course_id") int courseId) {
-        Topic topic = topicService.getById(id);
+    @GetMapping("/{uuid}")
+    public ResponseEntity<TopicDTO> getTopicById(@PathVariable("uuid") UUID uuid, @PathVariable("course_uuid") UUID courseUuid) {
+        Topic topic = topicService.getByUuid(uuid);
         if (topic != null) {
             return new ResponseEntity<>(transform(topic), HttpStatus.OK);
         } else {
@@ -49,21 +50,21 @@ public class TopicController {
     }
 
     @PostMapping
-    public ResponseEntity<TopicDTO> createTopic(@PathVariable("course_id") int courseId, @RequestBody TopicDTO topicDTO) {
+    public ResponseEntity<TopicDTO> createTopic(@PathVariable("course_uuid") UUID courseUuid, @RequestBody TopicDTO topicDTO) {
 
-        Topic createdTopic = topicService.create(courseId,transform(topicDTO, courseService.getById(courseId)));
+        Topic createdTopic = topicService.create(courseUuid,transform(topicDTO, courseService.getByUuid(courseUuid)));
         return new ResponseEntity<>(transform(createdTopic), HttpStatus.CREATED);
     }
 
-    @DeleteMapping("{id}")
-    public ResponseEntity<Void> deleteTopic(@PathVariable("id") int id, @PathVariable("course_id") int courseId) {
-        topicService.delete(id);
+    @DeleteMapping("{uuid}")
+    public ResponseEntity<Void> deleteTopic(@PathVariable("uuid") UUID uuid, @PathVariable("course_uuid") UUID courseUuid) {
+        topicService.delete(uuid);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     private TopicDTO transform(Topic topic) {
         TopicDTO topicDTO = new TopicDTO();
-        topicDTO.setId(topic.getId());
+        topicDTO.setUuid(topic.getUuid());
         topicDTO.setSectionId(topic.getSection().getId());
         topicDTO.setName(topic.getName());
         topicDTO.setDescription(topic.getDescription());
@@ -86,7 +87,7 @@ public class TopicController {
 
     private BlockDTO transform(Block block) {
         BlockDTO blockDTO = new BlockDTO();
-        blockDTO.setId(block.getId());
+        blockDTO.setUuid(block.getUuid());
         blockDTO.setOrder(block.getOrder());
         List<ResourceDTO> resources = new ArrayList<>();
         for (Resource resource : block.getResources()) {
@@ -99,7 +100,7 @@ public class TopicController {
 
     private ResourceDTO transform(Resource resource) {
         ResourceDTO resourceDTO = new ResourceDTO();
-        resourceDTO.setId(resource.getId());
+        resourceDTO.setUuid(resource.getUuid());
         resourceDTO.setOrder(resource.getOrder());
         resourceDTO.setContent(resource.getContent());
         resourceDTO.setResourceType(resource.getResourceType());
@@ -108,7 +109,7 @@ public class TopicController {
 
     private Topic transform(TopicDTO topicDTO, Course course) {
         Topic topic = new Topic();
-        topic.setId(topicDTO.getId());
+        topic.setUuid(topicDTO.getUuid());
 
         topic.setSection(findSection(topicDTO.getSectionId(), course));
         topic.setName(topicDTO.getName());
@@ -131,7 +132,7 @@ public class TopicController {
 
     private Block transform(BlockDTO blockDTO, Topic topic) {
         Block block = new Block();
-        block.setId(blockDTO.getId());
+        block.setUuid(blockDTO.getUuid());
         block.setTopic(topic);
         block.setOrder(blockDTO.getOrder());
         List<Resource> resources = new ArrayList<>();
@@ -144,7 +145,7 @@ public class TopicController {
 
     private Resource transform(ResourceDTO resourceDTO, Block block) {
         Resource resource = new Resource();
-        resource.setId(resourceDTO.getId());
+        resource.setUuid(resourceDTO.getUuid());
         resource.setOrder(resourceDTO.getOrder());
         resource.setContent(resourceDTO.getContent());
         resource.setResourceType(resourceDTO.getResourceType());

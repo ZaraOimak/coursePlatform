@@ -2,11 +2,14 @@ package org.artem.courses.entity;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class Block {
     private Integer id;
     private Topic topic;
     private Integer order;
+    private UUID uuid;
+
     private List <Resource> resources = new ArrayList<>();
 
     public List<Resource> getResources() {
@@ -39,6 +42,13 @@ public class Block {
 
     public void setOrder(Integer order) {
         this.order = order;
+    }
+    public UUID getUuid() {
+        return uuid;
+    }
+
+    public void setUuid(UUID uuid) {
+        this.uuid = uuid;
     }
 
 }

@@ -1,10 +1,21 @@
 package org.artem.courses.entity;
+
+import java.util.UUID;
+
 public class Resource {
     private Block parent;
     private Integer id;
+    private UUID uuid;
     private Integer order;
     private ResourceType resourceType;
     private String content;
+    public UUID getUuid() {
+        return uuid;
+    }
+
+    public void setUuid(UUID uuid) {
+        this.uuid = uuid;
+    }
 
     public Block getParent() {
         return parent;

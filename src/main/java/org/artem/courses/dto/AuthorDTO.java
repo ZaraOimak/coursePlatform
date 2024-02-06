@@ -6,6 +6,8 @@ import java.util.UUID;
 
 public class AuthorDTO {
     private UUID uuid;
+    private String name;
+    private List<Integer> coursesIds = new ArrayList<>();
 
     public UUID getUuid() {
         return uuid;
@@ -14,9 +16,6 @@ public class AuthorDTO {
     public void setUuid(UUID uuid) {
         this.uuid = uuid;
     }
-
-    private String name;
-    private List<Integer> coursesIds = new ArrayList<>();
 
     public String getName() {
         return name;

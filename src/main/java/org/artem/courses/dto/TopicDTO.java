@@ -6,9 +6,10 @@ import org.artem.courses.entity.Topic;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class TopicDTO {
-    private Integer id;
+    private UUID uuid;
     private Integer sectionId;
     private String name;
     private String description;
@@ -16,15 +17,13 @@ public class TopicDTO {
     private Integer nextTopicId;
     private List<BlockDTO> blocks = new ArrayList<>();
     private Integer order;
-
-    public Integer getId() {
-        return id;
+    public UUID getUuid() {
+        return uuid;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setUuid(UUID uuid) {
+        this.uuid = uuid;
     }
-
     public Integer getSectionId() {
         return sectionId;
     }

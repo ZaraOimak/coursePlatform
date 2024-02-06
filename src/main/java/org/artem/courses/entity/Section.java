@@ -4,15 +4,24 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class Section {
     private Integer id;
+    private UUID uuid;
     @JsonIgnore
     private Course course;
     private String name;
     private String description;
     private List<Topic> topics = new ArrayList<>();
     private Integer order;
+    public UUID getUuid() {
+        return uuid;
+    }
+
+    public void setUuid(UUID uuid) {
+        this.uuid = uuid;
+    }
 
     public Integer getOrder() {
         return order;

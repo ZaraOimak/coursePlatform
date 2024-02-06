@@ -6,22 +6,22 @@ import org.artem.courses.entity.Topic;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class SectionDTO {
-    private Integer id;
+    private UUID uuid;
     private String name;
     private String description;
     private List<Integer> topicsIds = new ArrayList<>();
     private Integer order;
 
-    public Integer getId() {
-        return id;
+    public UUID getUuid() {
+        return uuid;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setUuid(UUID uuid) {
+        this.uuid = uuid;
     }
-
     public String getName() {
         return name;
     }

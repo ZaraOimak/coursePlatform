@@ -1,22 +1,21 @@
 package org.artem.courses.dto;
 
-import org.artem.courses.entity.Resource;
-import org.artem.courses.entity.Topic;
-
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class BlockDTO {
-    private Integer id;
+    private UUID uuid;
     private Integer order;
     private List<ResourceDTO> resources = new ArrayList<>();
 
-    public Integer getId() {
-        return id;
+
+    public UUID getUuid() {
+        return uuid;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setUuid(UUID uuid) {
+        this.uuid = uuid;
     }
 
     public Integer getOrder() {
