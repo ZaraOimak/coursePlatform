@@ -1,16 +1,19 @@
-package org.artem.courses.entity;
+package org.artem.courses.dto;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.artem.courses.entity.Course;
+import org.artem.courses.entity.Topic;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class Course {
-    private Integer id;
+public class SectionDTO {
     private UUID uuid;
     private String name;
     private String description;
-    private List<Section> sections = new ArrayList<>();
-    private Author author;
+    private List<Integer> topicsIds = new ArrayList<>();
+    private Integer order;
 
     public UUID getUuid() {
         return uuid;
@@ -19,15 +22,6 @@ public class Course {
     public void setUuid(UUID uuid) {
         this.uuid = uuid;
     }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
     public String getName() {
         return name;
     }
@@ -44,19 +38,19 @@ public class Course {
         this.description = description;
     }
 
-    public List<Section> getSections() {
-        return sections;
+    public List<Integer> getTopicsIds() {
+        return topicsIds;
     }
 
-    public void setSections(List<Section> sections) {
-        this.sections = sections;
+    public void setTopicsIds(List<Integer> topicsIds) {
+        this.topicsIds = topicsIds;
     }
 
-    public Author getAuthor() {
-        return author;
+    public Integer getOrder() {
+        return order;
     }
 
-    public void setAuthor(Author author) {
-        this.author = author;
+    public void setOrder(Integer order) {
+        this.order = order;
     }
 }

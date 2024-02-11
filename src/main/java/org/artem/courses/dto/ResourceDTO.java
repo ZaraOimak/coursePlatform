@@ -1,14 +1,15 @@
-package org.artem.courses.entity;
+package org.artem.courses.dto;
+import org.artem.courses.entity.ResourceType;
 
 import java.util.UUID;
 
-public class Resource {
-    private Block parent;
-    private Integer id;
+public class ResourceDTO {
     private UUID uuid;
     private Integer order;
     private ResourceType resourceType;
     private String content;
+
+
     public UUID getUuid() {
         return uuid;
     }
@@ -17,20 +18,12 @@ public class Resource {
         this.uuid = uuid;
     }
 
-    public Block getParent() {
-        return parent;
+    public Integer getOrder() {
+        return order;
     }
 
-    public void setParent(Block parent) {
-        this.parent = parent;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
+    public void setOrder(Integer order) {
+        this.order = order;
     }
 
     public ResourceType getResourceType() {
@@ -39,14 +32,6 @@ public class Resource {
 
     public void setResourceType(ResourceType resourceType) {
         this.resourceType = resourceType;
-    }
-
-    public Integer getOrder() {
-        return order;
-    }
-
-    public void setOrder(Integer order) {
-        this.order = order;
     }
 
     public String getContent() {

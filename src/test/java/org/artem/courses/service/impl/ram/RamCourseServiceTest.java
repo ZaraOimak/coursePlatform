@@ -1,12 +1,12 @@
 package org.artem.courses.service.impl.ram;
 import org.artem.courses.entity.Course;
-import org.artem.courses.entity.Section;
-import org.artem.courses.entity.Topic;
+
 import org.artem.courses.service.CourseService;
 import org.artem.courses.service.TopicService;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
+import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 public class RamCourseServiceTest {
@@ -40,10 +40,13 @@ public class RamCourseServiceTest {
         Course old = new Course();
         old.setName("Тест курс");
         old.setId(5);
+        old.setUuid(UUID.randomUUID());
         ramManager.getCourses().put(5, old);
+        ramManager.getCoursesByUuid().put(old.getUuid(),old);
         Course updatedCourse = new Course();
         updatedCourse.setName("Новое имя");
         updatedCourse.setId(5);
+        updatedCourse.setUuid(old.getUuid());
 
         // when
         Course resultCourse = courseService.update(updatedCourse);
@@ -66,7 +69,7 @@ public class RamCourseServiceTest {
         course.setName("Тест курс");
 
         // when
-        courseService.delete(null);
+        courseService.delete((Integer) null);
 
         // then
         assertThat(ramManager.getCourses()).isEmpty();

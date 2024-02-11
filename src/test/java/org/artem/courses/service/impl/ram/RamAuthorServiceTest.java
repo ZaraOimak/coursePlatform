@@ -4,10 +4,9 @@ import org.artem.courses.entity.Author;
 import org.artem.courses.service.AuthorService;
 import org.junit.jupiter.api.Test;
 
-import org.junit.jupiter.api.Test;
-
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 public class RamAuthorServiceTest {
@@ -39,10 +38,13 @@ public class RamAuthorServiceTest {
         Author old = new Author();
         old.setName("Тест автор");
         old.setId(5);
+        old.setUuid(UUID.randomUUID());
         ramManager.getAuthors().put(5, old);
+        ramManager.getAuthorsByUuid().put(old.getUuid(), old);
         Author updatedAuthor = new Author();
         updatedAuthor.setName("Новое имя");
         updatedAuthor.setId(5);
+        updatedAuthor.setUuid(old.getUuid());
 
         // when
         Author resultAuthor = authorService.update(updatedAuthor);
