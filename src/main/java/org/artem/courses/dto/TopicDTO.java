@@ -1,16 +1,12 @@
 package org.artem.courses.dto;
 
-import org.artem.courses.entity.Block;
-import org.artem.courses.entity.Section;
-import org.artem.courses.entity.Topic;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
 public class TopicDTO {
     private UUID uuid;
-    private Integer sectionId;
+    private UUID sectionUuid;
     private String name;
     private String description;
     private Integer previousTopicId;
@@ -24,12 +20,13 @@ public class TopicDTO {
     public void setUuid(UUID uuid) {
         this.uuid = uuid;
     }
-    public Integer getSectionId() {
-        return sectionId;
+
+    public UUID getSectionUuid() {
+        return sectionUuid;
     }
 
-    public void setSectionId(Integer sectionId) {
-        this.sectionId = sectionId;
+    public void setSectionUuid(UUID sectionUuid) {
+        this.sectionUuid = sectionUuid;
     }
 
     public String getName() {

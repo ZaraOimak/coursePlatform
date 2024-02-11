@@ -65,7 +65,7 @@ public class TopicController {
     private TopicDTO transform(Topic topic) {
         TopicDTO topicDTO = new TopicDTO();
         topicDTO.setUuid(topic.getUuid());
-        topicDTO.setSectionId(topic.getSection().getId());
+        topicDTO.setSectionUuid(topic.getSection().getUuid());
         topicDTO.setName(topic.getName());
         topicDTO.setDescription(topic.getDescription());
         topicDTO.setOrder(topic.getOrder());
@@ -111,7 +111,7 @@ public class TopicController {
         Topic topic = new Topic();
         topic.setUuid(topicDTO.getUuid());
 
-        topic.setSection(findSection(topicDTO.getSectionId(), course));
+        topic.setSection(findSection(topicDTO.getSectionUuid(), course));
         topic.setName(topicDTO.getName());
         topic.setDescription(topicDTO.getDescription());
         List<Block> blocks = new ArrayList<>();
@@ -153,9 +153,9 @@ public class TopicController {
         return resource;
     }
 
-    private Section findSection(Integer sectionId, Course course) {
+    private Section findSection(UUID sectionUuid, Course course) {
         for (Section section : course.getSections()) {
-            if (Objects.equals(section.getId(), sectionId)) {
+            if (Objects.equals(section.getUuid(), sectionUuid)) {
                 return section;
             }
         }
