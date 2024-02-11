@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -39,10 +40,13 @@ public class RamTopicServiceTest {
         Topic old = new Topic();
         old.setName("Тест топик");
         old.setId(5);
+        old.setUuid(UUID.randomUUID());
         ramManager.getTopics().put(5, old);
+        ramManager.getTopicsByUuid().put(old.getUuid(),old);
         Topic updatedTopic = new Topic();
         updatedTopic.setName("новое имя");
         updatedTopic.setId(5);
+        updatedTopic.setUuid(old.getUuid());
 
         //when
         Topic resultTopic = topicService.update(updatedTopic);

@@ -22,48 +22,23 @@ public class RamTopicService implements TopicService {
             ramManager.getTopics().remove(id);
         }
     }
-
     @Override
     public void delete(UUID uuid) {
         if (uuid != null) {
             ramManager.getTopicsByUuid().remove(uuid);
+
         }
     }
 
     @Override
     public Topic update(Topic topic) {
-        if (topic.getId() == null && topic.getUuid() == null) {
-            throw new IllegalArgumentException();
-        }
-        if (topic.getUuid() == null) {
+        if (topic.getUuid() == null && topic.getId() == null) {
             topic.setUuid(UUID.randomUUID());
+            topic.setId(ramManager.getNewTopicId());
+        }else{
+            Topic saved = ramManager.getTopicsByUuid().get(topic.getUuid());
+            topic.setId(saved.getId());
         }
-        ramManager.getTopics().put(topic.getId(), topic);
-        ramManager.getTopicsByUuid().put(topic.getUuid(), topic);
-        return topic;
-    }
-
-    @Override
-    public Topic create(Integer courseId, Topic topic) {
-        if (courseId == null || !ramManager.getCourses().containsKey(courseId)) {
-            throw new IllegalArgumentException();
-        }
-
-        topic.setId(ramManager.getNewTopicId());
-        topic.setUuid(UUID.randomUUID());
-        ramManager.getTopics().put(topic.getId(), topic);
-        ramManager.getTopicsByUuid().put(topic.getUuid(), topic);
-        return topic;
-    }
-
-    @Override
-    public Topic create(UUID courseUuid, Topic topic) {
-        if (courseUuid == null || !ramManager.getCoursesByUuid().containsKey(courseUuid)) {
-            throw new IllegalArgumentException();
-        }
-
-        topic.setId(ramManager.getNewTopicId());
-        topic.setUuid(UUID.randomUUID());
         ramManager.getTopics().put(topic.getId(), topic);
         ramManager.getTopicsByUuid().put(topic.getUuid(), topic);
         return topic;
@@ -109,6 +84,6 @@ public class RamTopicService implements TopicService {
                 topics.add(topic);
             }
         }
-        return topics;
+    return topics;
     }
 }

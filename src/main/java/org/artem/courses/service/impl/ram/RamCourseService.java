@@ -50,6 +50,9 @@ public class RamCourseService implements CourseService {
         if (course.getId() == null && course.getUuid() == null) {
             course.setId(ramManager.getNewCourseId());
             course.setUuid(UUID.randomUUID());
+        } else{
+            Course oldCourse = ramManager.getCoursesByUuid().get(course.getUuid());
+            course.setId(oldCourse.getId());
         }
         for(Section section : course.getSections()){
             section.setCourse(course);

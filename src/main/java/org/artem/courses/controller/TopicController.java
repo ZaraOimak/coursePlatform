@@ -18,7 +18,7 @@ import java.util.UUID;
 
 
 @RestController
-@RequestMapping("/courses/{course_id}/topics")
+@RequestMapping("/courses/{course_uuid}/topics")
 public class TopicController {
     private final TopicService topicService;
     private final CourseService courseService;
@@ -50,9 +50,9 @@ public class TopicController {
     }
 
     @PostMapping
-    public ResponseEntity<TopicDTO> createTopic(@PathVariable("course_uuid") UUID courseUuid, @RequestBody TopicDTO topicDTO) {
+    public ResponseEntity<TopicDTO> updateTopic(@PathVariable("course_uuid") UUID courseUuid, @RequestBody TopicDTO topicDTO) {
 
-        Topic createdTopic = topicService.create(courseUuid,transform(topicDTO, courseService.getByUuid(courseUuid)));
+        Topic createdTopic = topicService.update(transform(topicDTO, courseService.getByUuid(courseUuid)));
         return new ResponseEntity<>(transform(createdTopic), HttpStatus.CREATED);
     }
 
