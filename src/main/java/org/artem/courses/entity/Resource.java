@@ -1,12 +1,18 @@
 package org.artem.courses.entity;
 
-import java.util.UUID;
+import jakarta.persistence.*;
 
+import java.util.UUID;
+@Entity
 public class Resource {
+    @ManyToOne
     private Block parent;
+    @Id
+    @GeneratedValue
     private Integer id;
     private UUID uuid;
-    private Integer order;
+    private Integer position;
+    @Enumerated(EnumType.STRING)
     private ResourceType resourceType;
     private String content;
     public UUID getUuid() {
@@ -41,12 +47,12 @@ public class Resource {
         this.resourceType = resourceType;
     }
 
-    public Integer getOrder() {
-        return order;
+    public Integer getPosition() {
+        return position;
     }
 
-    public void setOrder(Integer order) {
-        this.order = order;
+    public void setPosition(Integer order) {
+        this.position = order;
     }
 
     public String getContent() {

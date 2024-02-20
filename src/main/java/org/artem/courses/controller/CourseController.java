@@ -83,7 +83,7 @@ public class CourseController {
         SectionDTO sectionDTO = new SectionDTO();
         sectionDTO.setUuid(section.getUuid());
         sectionDTO.setName(section.getName());
-        sectionDTO.setOrder(section.getOrder());
+        sectionDTO.setOrder(section.getPosition());
         sectionDTO.setDescription(section.getDescription());
 
         List<Integer> topicsIds = new ArrayList<>();
@@ -113,7 +113,7 @@ public class CourseController {
         Section section = new Section();
         section.setUuid(sectionDTO.getUuid());
         section.setName(sectionDTO.getName());
-        section.setOrder(sectionDTO.getOrder());
+        section.setPosition(sectionDTO.getOrder());
         section.setDescription(sectionDTO.getDescription());
         section.setCourse(course);
         List<Topic> topics = new ArrayList<>();

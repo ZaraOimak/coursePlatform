@@ -68,7 +68,7 @@ public class TopicController {
         topicDTO.setSectionUuid(topic.getSection().getUuid());
         topicDTO.setName(topic.getName());
         topicDTO.setDescription(topic.getDescription());
-        topicDTO.setOrder(topic.getOrder());
+        topicDTO.setOrder(topic.getPosition());
 
         List<BlockDTO> blocks = new ArrayList<>();
         for (Block block : topic.getBlocks()) {
@@ -88,7 +88,7 @@ public class TopicController {
     private BlockDTO transform(Block block) {
         BlockDTO blockDTO = new BlockDTO();
         blockDTO.setUuid(block.getUuid());
-        blockDTO.setOrder(block.getOrder());
+        blockDTO.setOrder(block.getPosition());
         List<ResourceDTO> resources = new ArrayList<>();
         for (Resource resource : block.getResources()) {
             resources.add(transform(resource));
@@ -101,7 +101,7 @@ public class TopicController {
     private ResourceDTO transform(Resource resource) {
         ResourceDTO resourceDTO = new ResourceDTO();
         resourceDTO.setUuid(resource.getUuid());
-        resourceDTO.setOrder(resource.getOrder());
+        resourceDTO.setOrder(resource.getPosition());
         resourceDTO.setContent(resource.getContent());
         resourceDTO.setResourceType(resource.getResourceType());
         return resourceDTO;
@@ -119,7 +119,7 @@ public class TopicController {
             blocks.add(transform(blockDTO, topic));
         }
         topic.setBlocks(blocks);
-        topic.setOrder(topicDTO.getOrder());
+        topic.setPosition(topicDTO.getOrder());
 
         if (topicDTO.getNextTopicId() != null) {
             topic.setNext(topicService.getById(topicDTO.getNextTopicId()));
@@ -134,7 +134,7 @@ public class TopicController {
         Block block = new Block();
         block.setUuid(blockDTO.getUuid());
         block.setTopic(topic);
-        block.setOrder(blockDTO.getOrder());
+        block.setPosition(blockDTO.getOrder());
         List<Resource> resources = new ArrayList<>();
         for (ResourceDTO resourceDTO : blockDTO.getResources()) {
             resources.add(transform(resourceDTO, block));
@@ -146,7 +146,7 @@ public class TopicController {
     private Resource transform(ResourceDTO resourceDTO, Block block) {
         Resource resource = new Resource();
         resource.setUuid(resourceDTO.getUuid());
-        resource.setOrder(resourceDTO.getOrder());
+        resource.setPosition(resourceDTO.getOrder());
         resource.setContent(resourceDTO.getContent());
         resource.setResourceType(resourceDTO.getResourceType());
         resource.setParent(block);

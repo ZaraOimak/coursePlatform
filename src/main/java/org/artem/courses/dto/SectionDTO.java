@@ -1,9 +1,5 @@
 package org.artem.courses.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.artem.courses.entity.Course;
-import org.artem.courses.entity.Topic;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;

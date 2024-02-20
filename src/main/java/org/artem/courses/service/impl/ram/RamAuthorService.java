@@ -2,13 +2,11 @@ package org.artem.courses.service.impl.ram;
 
 import org.artem.courses.entity.Author;
 import org.artem.courses.service.AuthorService;
-import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-@Service
 public class RamAuthorService implements AuthorService {
     private final RamManager ramManager;
 

@@ -1,8 +1,5 @@
 package org.artem.courses.dto;
 
-import org.artem.courses.entity.Author;
-import org.artem.courses.entity.Section;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;

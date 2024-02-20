@@ -1,15 +1,22 @@
 package org.artem.courses.entity;
 
+import jakarta.persistence.*;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+@Entity
 public class Course {
+    @Id
+    @GeneratedValue
     private Integer id;
     private UUID uuid;
     private String name;
     private String description;
+    @OneToMany
     private List<Section> sections = new ArrayList<>();
+    @ManyToOne
     private Author author;
 
     public UUID getUuid() {
