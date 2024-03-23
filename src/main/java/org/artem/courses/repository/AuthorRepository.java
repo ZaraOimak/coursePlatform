@@ -7,6 +7,7 @@ import java.util.UUID;
 
 public interface AuthorRepository extends JpaRepository<Author, Integer> {
     void deleteByUuid(UUID uuid);
+
     Author getByUuid(UUID uuid);
 }
 

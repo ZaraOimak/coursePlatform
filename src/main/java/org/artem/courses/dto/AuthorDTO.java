@@ -1,13 +1,12 @@
 package org.artem.courses.dto;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
 public class AuthorDTO {
     private UUID uuid;
     private String name;
-    private List<Integer> coursesIds = new ArrayList<>();
+    private List<UUID> coursesUuids;
 
     public UUID getUuid() {
         return uuid;
@@ -25,11 +24,11 @@ public class AuthorDTO {
         this.name = name;
     }
 
-    public List<Integer> getCoursesIds() {
-        return coursesIds;
+    public List<UUID> getCoursesUuids() {
+        return coursesUuids;
     }
 
-    public void setCoursesIds(List<Integer> coursesIds) {
-        this.coursesIds = coursesIds;
+    public void setCoursesUuids(List<UUID> coursesUuids) {
+        this.coursesUuids = coursesUuids;
     }
 }

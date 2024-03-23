@@ -11,14 +11,16 @@ public class Section {
     @Id
     @GeneratedValue
     private Integer id;
+    @Column(unique = true, nullable = false, updatable = false)
     private UUID uuid;
     @ManyToOne
     private Course course;
     private String name;
     private String description;
-    @OneToMany
+    @OneToMany(orphanRemoval = true, cascade = CascadeType.ALL)
     private List<Topic> topics = new ArrayList<>();
     private Integer position;
+
     public UUID getUuid() {
         return uuid;
     }
@@ -31,8 +33,8 @@ public class Section {
         return position;
     }
 
-    public void setPosition(Integer order) {
-        this.position = order;
+    public void setPosition(Integer position) {
+        this.position = position;
     }
 
     public Integer getId() {

@@ -3,6 +3,7 @@ package org.artem.courses.entity;
 import jakarta.persistence.*;
 
 import java.util.UUID;
+
 @Entity
 public class Resource {
     @ManyToOne
@@ -15,6 +16,7 @@ public class Resource {
     @Enumerated(EnumType.STRING)
     private ResourceType resourceType;
     private String content;
+
     public UUID getUuid() {
         return uuid;
     }
@@ -51,8 +53,8 @@ public class Resource {
         return position;
     }
 
-    public void setPosition(Integer order) {
-        this.position = order;
+    public void setPosition(Integer position) {
+        this.position = position;
     }
 
     public String getContent() {

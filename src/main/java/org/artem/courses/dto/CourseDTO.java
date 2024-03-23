@@ -1,6 +1,5 @@
 package org.artem.courses.dto;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -9,6 +8,7 @@ public class CourseDTO {
     private String description;
     private UUID authorUuid;
     private UUID uuid;
+    private List<SectionDTO> sections;
 
     public UUID getUuid() {
         return uuid;
@@ -26,8 +26,6 @@ public class CourseDTO {
     public void setAuthorUuid(UUID authorUuid) {
         this.authorUuid = authorUuid;
     }
-
-    private List<SectionDTO> sections = new ArrayList<>();
 
     public List<SectionDTO> getSections() {
         return sections;

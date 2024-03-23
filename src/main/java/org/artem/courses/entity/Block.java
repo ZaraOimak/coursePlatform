@@ -17,7 +17,7 @@ public class Block {
 
     private UUID uuid;
 
-    @OneToMany
+    @OneToMany(orphanRemoval = true, cascade = CascadeType.ALL)
     private List<Resource> resources = new ArrayList<>();
 
     public List<Resource> getResources() {

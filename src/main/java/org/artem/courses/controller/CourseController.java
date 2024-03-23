@@ -1,19 +1,12 @@
 package org.artem.courses.controller;
 
 import org.artem.courses.dto.CourseDTO;
-import org.artem.courses.dto.SectionDTO;
-import org.artem.courses.entity.Course;
-import org.artem.courses.entity.Section;
-import org.artem.courses.entity.Topic;
-import org.artem.courses.service.AuthorService;
 import org.artem.courses.service.CourseService;
-import org.artem.courses.service.TopicService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -22,31 +15,22 @@ import java.util.UUID;
 
 public class CourseController {
     private final CourseService courseService;
-    private final TopicService topicService;
-    private final AuthorService authorService;
 
     @Autowired
-    public CourseController(CourseService courseService, TopicService topicService, AuthorService authorService) {
+    public CourseController(CourseService courseService) {
         this.courseService = courseService;
-        this.topicService = topicService;
-        this.authorService = authorService;
     }
 
     @GetMapping
     public ResponseEntity<List<CourseDTO>> getAllCourses() {
-        List<Course> courses = courseService.getAll();
-        List<CourseDTO> courseDTOS = new ArrayList<>();
-        for (Course course : courses) {
-            courseDTOS.add(transform(course));
-        }
-        return new ResponseEntity<>(courseDTOS, HttpStatus.OK);
+        return new ResponseEntity<>(courseService.getAllDto(), HttpStatus.OK);
     }
 
     @GetMapping("/{uuid}")
     public ResponseEntity<CourseDTO> getCourseById(@PathVariable("uuid") UUID uuid) {
-        Course course = courseService.getByUuid(uuid);
+        CourseDTO course = courseService.getByUuidDto(uuid);
         if (course != null) {
-            return new ResponseEntity<>(transform(course), HttpStatus.OK);
+            return new ResponseEntity<>(course, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
@@ -54,8 +38,7 @@ public class CourseController {
 
     @PostMapping
     public ResponseEntity<CourseDTO> createCourse(@RequestBody CourseDTO courseDTO) {
-        Course createdCourse = courseService.update(transform(courseDTO));
-        return new ResponseEntity<>(transform(createdCourse), HttpStatus.CREATED);
+        return new ResponseEntity<>(courseService.update(courseDTO), HttpStatus.CREATED);
     }
 
     @DeleteMapping("/{uuid}")
@@ -64,63 +47,4 @@ public class CourseController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    private CourseDTO transform(Course course) {
-        CourseDTO courseDTO = new CourseDTO();
-        courseDTO.setUuid(course.getUuid());
-        courseDTO.setName(course.getName());
-        courseDTO.setDescription(course.getDescription());
-        courseDTO.setAuthorUuid(course.getAuthor().getUuid());
-
-        List<SectionDTO> sections = new ArrayList<>();
-        for (Section section : course.getSections()) {
-            sections.add(transform(section));
-        }
-        courseDTO.setSections(sections);
-        return courseDTO;
-    }
-
-    private SectionDTO transform(Section section) {
-        SectionDTO sectionDTO = new SectionDTO();
-        sectionDTO.setUuid(section.getUuid());
-        sectionDTO.setName(section.getName());
-        sectionDTO.setOrder(section.getPosition());
-        sectionDTO.setDescription(section.getDescription());
-
-        List<Integer> topicsIds = new ArrayList<>();
-        for (Topic topic : section.getTopics()) {
-            topicsIds.add(topic.getId());
-        }
-        sectionDTO.setTopicsIds(topicsIds);
-        return sectionDTO;
-    }
-
-    private Course transform(CourseDTO courseDTO) {
-        Course course = new Course();
-        course.setUuid(courseDTO.getUuid());
-        course.setName(courseDTO.getName());
-        course.setDescription(courseDTO.getDescription());
-
-        course.setAuthor(authorService.getByUuid(courseDTO.getAuthorUuid()));
-        List<Section> sections = new ArrayList<>();
-        for (SectionDTO sectionDTO : courseDTO.getSections()) {
-            sections.add(transform(sectionDTO, course));
-        }
-        course.setSections(sections);
-        return course;
-    }
-
-    private Section transform(SectionDTO sectionDTO, Course course) {
-        Section section = new Section();
-        section.setUuid(sectionDTO.getUuid());
-        section.setName(sectionDTO.getName());
-        section.setPosition(sectionDTO.getOrder());
-        section.setDescription(sectionDTO.getDescription());
-        section.setCourse(course);
-        List<Topic> topics = new ArrayList<>();
-        for (Integer topicId : sectionDTO.getTopicsIds()) {
-            topics.add(topicService.getById(topicId));
-        }
-        section.setTopics(topics);
-        return section;
-    }
 }

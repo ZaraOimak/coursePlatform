@@ -20,7 +20,7 @@ public class Topic {
     private Topic previous;
     @OneToOne
     private Topic next;
-    @OneToMany
+    @OneToMany(orphanRemoval = true, cascade = CascadeType.ALL)
     private List<Block> blocks = new ArrayList<>();
     private Integer position;
 

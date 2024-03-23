@@ -1,6 +1,5 @@
 package org.artem.courses.dto;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -8,8 +7,8 @@ public class SectionDTO {
     private UUID uuid;
     private String name;
     private String description;
-    private List<Integer> topicsIds = new ArrayList<>();
-    private Integer order;
+    private List<UUID> topicsIds;
+    private Integer position;
 
     public UUID getUuid() {
         return uuid;
@@ -18,6 +17,7 @@ public class SectionDTO {
     public void setUuid(UUID uuid) {
         this.uuid = uuid;
     }
+
     public String getName() {
         return name;
     }
@@ -34,19 +34,19 @@ public class SectionDTO {
         this.description = description;
     }
 
-    public List<Integer> getTopicsIds() {
+    public List<UUID> getTopicsIds() {
         return topicsIds;
     }
 
-    public void setTopicsIds(List<Integer> topicsIds) {
+    public void setTopicsIds(List<UUID> topicsIds) {
         this.topicsIds = topicsIds;
     }
 
-    public Integer getOrder() {
-        return order;
+    public Integer getPosition() {
+        return position;
     }
 
-    public void setOrder(Integer order) {
-        this.order = order;
+    public void setPosition(Integer position) {
+        this.position = position;
     }
 }
