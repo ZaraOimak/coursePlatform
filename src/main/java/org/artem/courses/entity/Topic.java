@@ -1,14 +1,36 @@
 package org.artem.courses.entity;
 
-import java.util.List;
+import jakarta.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
+
+@Entity
 public class Topic {
+    @Id
+    @GeneratedValue
     private Integer id;
+    private UUID uuid;
+    @ManyToOne
     private Section section;
     private String name;
     private String description;
+    @OneToOne
     private Topic previous;
+    @OneToOne
     private Topic next;
+    @OneToMany(orphanRemoval = true, cascade = CascadeType.ALL)
+    private List<Block> blocks = new ArrayList<>();
+    private Integer position;
+
+    public UUID getUuid() {
+        return uuid;
+    }
+
+    public void setUuid(UUID uuid) {
+        this.uuid = uuid;
+    }
 
     public Topic getPrevious() {
         return previous;
@@ -26,8 +48,6 @@ public class Topic {
         this.next = next;
     }
 
-    private List<Block> blocks;
-    private Integer order;
 
     public Integer getId() {
         return id;
@@ -69,11 +89,11 @@ public class Topic {
         this.blocks = blocks;
     }
 
-    public Integer getOrder() {
-        return order;
+    public Integer getPosition() {
+        return position;
     }
 
-    public void setOrder(Integer order) {
-        this.order = order;
+    public void setPosition(Integer order) {
+        this.position = order;
     }
 }
