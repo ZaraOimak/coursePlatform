@@ -14,10 +14,11 @@ public class Section {
     @Column(unique = true, nullable = false, updatable = false)
     private UUID uuid;
     @ManyToOne
+    @JoinColumn(name = "course_id", referencedColumnName = "id")
     private Course course;
     private String name;
     private String description;
-    @OneToMany(orphanRemoval = true, cascade = CascadeType.ALL)
+    @OneToMany(orphanRemoval = true, cascade = CascadeType.ALL, mappedBy = "section")
     private List<Topic> topics = new ArrayList<>();
     private Integer position;
 

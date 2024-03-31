@@ -7,6 +7,7 @@ import java.util.UUID;
 @Entity
 public class Resource {
     @ManyToOne
+    @JoinColumn(name = "block_id",referencedColumnName = "id")
     private Block parent;
     @Id
     @GeneratedValue
@@ -14,6 +15,7 @@ public class Resource {
     private UUID uuid;
     private Integer position;
     @Enumerated(EnumType.STRING)
+    @Column(name = "type")
     private ResourceType resourceType;
     private String content;
 

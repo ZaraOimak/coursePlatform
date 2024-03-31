@@ -13,14 +13,17 @@ public class Topic {
     private Integer id;
     private UUID uuid;
     @ManyToOne
+    @JoinColumn(name = "section_id", referencedColumnName = "id")
     private Section section;
     private String name;
     private String description;
     @OneToOne
+    @JoinColumn(name = "prev_topic_id", referencedColumnName = "id")
     private Topic previous;
     @OneToOne
+    @JoinColumn(name = "next_topic_id", referencedColumnName = "id")
     private Topic next;
-    @OneToMany(orphanRemoval = true, cascade = CascadeType.ALL)
+    @OneToMany(orphanRemoval = true, cascade = CascadeType.ALL, mappedBy = "topic")
     private List<Block> blocks = new ArrayList<>();
     private Integer position;
 

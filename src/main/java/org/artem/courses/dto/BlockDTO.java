@@ -5,9 +5,9 @@ import java.util.UUID;
 
 public class BlockDTO {
     private UUID uuid;
+    private String name;
     private Integer position;
     private List<ResourceDTO> resources;
-
 
     public UUID getUuid() {
         return uuid;
@@ -31,5 +31,13 @@ public class BlockDTO {
 
     public void setResources(List<ResourceDTO> resources) {
         this.resources = resources;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

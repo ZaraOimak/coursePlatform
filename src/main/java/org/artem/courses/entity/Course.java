@@ -14,9 +14,10 @@ public class Course {
     private UUID uuid;
     private String name;
     private String description;
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "course")
     private List<Section> sections = new ArrayList<>();
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToOne
+    @JoinColumn(name = "author_id", referencedColumnName = "id")
     private Author author;
 
     public UUID getUuid() {

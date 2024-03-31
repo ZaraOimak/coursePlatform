@@ -13,7 +13,7 @@ public class Author {
     private Integer id;
     private UUID uuid;
     private String name;
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "author")
     private List<Course> courses = new ArrayList<>();
 
     public UUID getUuid() {

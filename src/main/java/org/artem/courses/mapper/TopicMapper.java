@@ -49,7 +49,7 @@ public abstract class TopicMapper {
             for (BlockDTO blockDTO : topicDTO.getBlocks()) {
                 Block block = getOrCreateBlock(entity, blockDTO.getUuid());
                 blockMapper.updateBlockFromDTO(blockDTO, block);
-                if (block.getPk() == null) {
+                if (block.getId() == null) {
                     blocks.add(block);
                 }
             }
