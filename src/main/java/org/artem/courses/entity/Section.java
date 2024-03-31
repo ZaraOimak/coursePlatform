@@ -1,21 +1,41 @@
 package org.artem.courses.entity;
 
-import java.util.List;
+import jakarta.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
+
+@Entity
 public class Section {
+    @Id
+    @GeneratedValue
     private Integer id;
+    @Column(unique = true, nullable = false, updatable = false)
+    private UUID uuid;
+    @ManyToOne
+    @JoinColumn(name = "course_id", referencedColumnName = "id")
     private Course course;
     private String name;
     private String description;
-    private List<Topic> topics;
-    private Integer order;
+    @OneToMany(orphanRemoval = true, cascade = CascadeType.ALL, mappedBy = "section")
+    private List<Topic> topics = new ArrayList<>();
+    private Integer position;
 
-    public Integer getOrder() {
-        return order;
+    public UUID getUuid() {
+        return uuid;
     }
 
-    public void setOrder(Integer order) {
-        this.order = order;
+    public void setUuid(UUID uuid) {
+        this.uuid = uuid;
+    }
+
+    public Integer getPosition() {
+        return position;
+    }
+
+    public void setPosition(Integer position) {
+        this.position = position;
     }
 
     public Integer getId() {
