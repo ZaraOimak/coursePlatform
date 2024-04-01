@@ -1,14 +1,13 @@
 package org.artem.courses.dto;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
 public class BlockDTO {
     private UUID uuid;
-    private Integer order;
-    private List<ResourceDTO> resources = new ArrayList<>();
-
+    private String name;
+    private Integer position;
+    private List<ResourceDTO> resources;
 
     public UUID getUuid() {
         return uuid;
@@ -18,12 +17,12 @@ public class BlockDTO {
         this.uuid = uuid;
     }
 
-    public Integer getOrder() {
-        return order;
+    public Integer getPosition() {
+        return position;
     }
 
-    public void setOrder(Integer order) {
-        this.order = order;
+    public void setPosition(Integer position) {
+        this.position = position;
     }
 
     public List<ResourceDTO> getResources() {
@@ -32,5 +31,13 @@ public class BlockDTO {
 
     public void setResources(List<ResourceDTO> resources) {
         this.resources = resources;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

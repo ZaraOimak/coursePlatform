@@ -1,11 +1,20 @@
 package org.artem.courses.entity;
 
+import jakarta.persistence.*;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+@Entity
 public class Author {
+    @Id
+    @GeneratedValue
     private Integer id;
     private UUID uuid;
+    private String name;
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "author")
+    private List<Course> courses = new ArrayList<>();
 
     public UUID getUuid() {
         return uuid;
@@ -15,8 +24,6 @@ public class Author {
         this.uuid = uuid;
     }
 
-    private String name;
-    private List<Course> courses;
 
     public List<Course> getCourses() {
         return courses;

@@ -1,5 +1,6 @@
 package org.artem.courses.service;
 
+import org.artem.courses.dto.CourseDTO;
 import org.artem.courses.entity.Course;
 
 import java.util.List;
@@ -17,4 +18,10 @@ public interface CourseService {
     Course getByUuid(UUID uuid);
 
     List<Course> getAll();
+
+    CourseDTO update(CourseDTO courseDTO);
+
+    CourseDTO getByUuidDto(UUID uuid);
+
+    List<CourseDTO> getAllDto();
 }

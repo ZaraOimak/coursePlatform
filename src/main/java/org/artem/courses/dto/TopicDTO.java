@@ -1,6 +1,5 @@
 package org.artem.courses.dto;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -9,10 +8,27 @@ public class TopicDTO {
     private UUID sectionUuid;
     private String name;
     private String description;
-    private Integer previousTopicId;
-    private Integer nextTopicId;
-    private List<BlockDTO> blocks = new ArrayList<>();
-    private Integer order;
+    private UUID previousTopicUuid;
+    private UUID nextTopicUuid;
+    private List<BlockDTO> blocks;
+    private Integer position;
+
+    public UUID getPreviousTopicUuid() {
+        return previousTopicUuid;
+    }
+
+    public void setPreviousTopicUuid(UUID previousTopicUuid) {
+        this.previousTopicUuid = previousTopicUuid;
+    }
+
+    public UUID getNextTopicUuid() {
+        return nextTopicUuid;
+    }
+
+    public void setNextTopicUuid(UUID nextTopicUuid) {
+        this.nextTopicUuid = nextTopicUuid;
+    }
+
     public UUID getUuid() {
         return uuid;
     }
@@ -45,21 +61,6 @@ public class TopicDTO {
         this.description = description;
     }
 
-    public Integer getPreviousTopicId() {
-        return previousTopicId;
-    }
-
-    public void setPreviousTopicId(Integer previousTopicId) {
-        this.previousTopicId = previousTopicId;
-    }
-
-    public Integer getNextTopicId() {
-        return nextTopicId;
-    }
-
-    public void setNextTopicId(Integer nextTopicId) {
-        this.nextTopicId = nextTopicId;
-    }
 
     public List<BlockDTO> getBlocks() {
         return blocks;
@@ -69,11 +70,11 @@ public class TopicDTO {
         this.blocks = blocks;
     }
 
-    public Integer getOrder() {
-        return order;
+    public Integer getPosition() {
+        return position;
     }
 
-    public void setOrder(Integer order) {
-        this.order = order;
+    public void setPosition(Integer position) {
+        this.position = position;
     }
 }

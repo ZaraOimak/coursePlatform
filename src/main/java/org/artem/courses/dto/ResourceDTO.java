@@ -1,11 +1,12 @@
 package org.artem.courses.dto;
+
 import org.artem.courses.entity.ResourceType;
 
 import java.util.UUID;
 
 public class ResourceDTO {
     private UUID uuid;
-    private Integer order;
+    private Integer position;
     private ResourceType resourceType;
     private String content;
 
@@ -18,12 +19,12 @@ public class ResourceDTO {
         this.uuid = uuid;
     }
 
-    public Integer getOrder() {
-        return order;
+    public Integer getPosition() {
+        return position;
     }
 
-    public void setOrder(Integer order) {
-        this.order = order;
+    public void setPosition(Integer position) {
+        this.position = position;
     }
 
     public ResourceType getResourceType() {

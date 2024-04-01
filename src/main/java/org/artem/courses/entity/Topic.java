@@ -1,19 +1,31 @@
 package org.artem.courses.entity;
 
+import jakarta.persistence.*;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+@Entity
 public class Topic {
+    @Id
+    @GeneratedValue
     private Integer id;
     private UUID uuid;
+    @ManyToOne
+    @JoinColumn(name = "section_id", referencedColumnName = "id")
     private Section section;
     private String name;
     private String description;
+    @OneToOne
+    @JoinColumn(name = "prev_topic_id", referencedColumnName = "id")
     private Topic previous;
+    @OneToOne
+    @JoinColumn(name = "next_topic_id", referencedColumnName = "id")
     private Topic next;
+    @OneToMany(orphanRemoval = true, cascade = CascadeType.ALL, mappedBy = "topic")
     private List<Block> blocks = new ArrayList<>();
-    private Integer order;
+    private Integer position;
 
     public UUID getUuid() {
         return uuid;
@@ -80,11 +92,11 @@ public class Topic {
         this.blocks = blocks;
     }
 
-    public Integer getOrder() {
-        return order;
+    public Integer getPosition() {
+        return position;
     }
 
-    public void setOrder(Integer order) {
-        this.order = order;
+    public void setPosition(Integer order) {
+        this.position = order;
     }
 }
