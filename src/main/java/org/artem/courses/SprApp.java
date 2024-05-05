@@ -1,6 +1,8 @@
 package org.artem.courses;
+
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+
 @SpringBootApplication
 
 public class SprApp {
@@ -8,3 +10,4 @@ public class SprApp {
         SpringApplication.run(SprApp.class, args);
     }
 }
+
