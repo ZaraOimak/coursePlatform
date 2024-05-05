@@ -17,6 +17,8 @@ import java.util.UUID;
 public abstract class CourseMapper {
     @Autowired
     private AuthorRepository authorRepository;
+    @Autowired
+    private SectionMapper sectionMapper;
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     @Mapping(target = "author", expression = "java(uuidToAuthor(dto.getAuthorUuid(), entity))")
@@ -27,23 +29,7 @@ public abstract class CourseMapper {
     public abstract CourseDTO toDto(Course entity);
 
     public abstract List<CourseDTO> toDtoList(List<Course> courses);
-
-//    protected Author mapUuidToAuthor(UUID value) {
-//        if (value == null) {
-//            return null;
-//        }
-//        return authorRepository.getByUuid(value);
-//    }
-//
-//    protected UUID mapAuthorToUuid(Author author) {
-//        if (author == null) {
-//            return null;
-//        }
-//        return author.getUuid();
-//    }
-
     protected List<Section> updateSections(CourseDTO courseDTO, @MappingTarget Course entity) {
-        SectionMapper sectionMapper = Mappers.getMapper(SectionMapper.class);
         if (courseDTO.getSections() == null) {
             return entity.getSections();
         }

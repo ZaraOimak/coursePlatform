@@ -6,12 +6,15 @@ import org.artem.courses.entity.Block;
 import org.artem.courses.entity.Resource;
 import org.mapstruct.*;
 import org.mapstruct.factory.Mappers;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 import java.util.UUID;
 
 @Mapper(componentModel = "spring", uses = ResourceMapper.class)
 public abstract class BlockMapper {
+    @Autowired
+    private ResourceMapper resourceMapper;
 
     public abstract BlockDTO toDTO(Block block);
 
@@ -19,8 +22,9 @@ public abstract class BlockMapper {
     @Mapping(target = "resources", expression = "java(updateResources(blockDTO,entity))")
     public abstract void updateBlockFromDTO(BlockDTO blockDTO, @MappingTarget Block entity);
 
+
     protected List<Resource> updateResources(BlockDTO blockDTO, @MappingTarget Block entity) {
-        ResourceMapper resourceMapper = Mappers.getMapper(ResourceMapper.class);
+
         if (blockDTO.getResources() == null) {
             return entity.getResources();
         }

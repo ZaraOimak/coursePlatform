@@ -3,6 +3,7 @@ package org.artem.courses.mapper;
 import org.artem.courses.dto.SectionDTO;
 import org.artem.courses.entity.Section;
 import org.artem.courses.entity.Topic;
+import org.artem.courses.repository.TopicRepository;
 import org.artem.courses.service.TopicService;
 import org.mapstruct.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +15,7 @@ import java.util.stream.Collectors;
 @Mapper(componentModel = "spring")
 public abstract class SectionMapper {
     @Autowired
-    private TopicService topicService;
+    private TopicRepository topicRepository;
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     @Mapping(target = "topics", source = "topicsIds")
@@ -32,7 +33,7 @@ public abstract class SectionMapper {
             return null;
         }
         return topicsIds.stream()
-                .map(topicId -> topicService.getByUuid(topicId))
+                .map(topicId -> topicRepository.getByUuid(topicId))
                 .collect(Collectors.toList());
     }
 
