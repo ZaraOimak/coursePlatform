@@ -9,7 +9,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
+import java.util.function.Predicate;
 
 @Service
 public class DefaultTopicService implements TopicService {
@@ -51,7 +53,6 @@ public class DefaultTopicService implements TopicService {
                 topic.setId(saved.getId());
             }
         }
-
         return topicRepository.save(topic);
     }
 
@@ -59,6 +60,24 @@ public class DefaultTopicService implements TopicService {
     public TopicDTO update(TopicDTO topicDto) {
         Topic topic = getTopic(topicDto.getUuid());
         topicMapper.updateTopicFromDto(topicDto, topic);
+        if (topic.getPosition() == null) {
+            if (topic.getSection() == null) {
+                throw new IllegalStateException("topic must have section");
+            }
+            int maxPosition = topic.getSection().getTopics().stream()
+                    .filter(Predicate.not(topic::equals))
+                    .mapToInt(Topic::getPosition)
+                    .filter(Objects::nonNull).max().orElse(-1);
+            topic.setPosition(maxPosition + 1);
+
+            topic.getSection().getTopics().stream()
+                    .filter(Predicate.not(topic::equals))
+                    .filter(existingTopic -> existingTopic.getPosition().equals(maxPosition)).findFirst()
+                    .ifPresent(previousTopic -> {
+                        topic.setPrevious(previousTopic);
+                        previousTopic.setNext(topic);
+                    });
+        }
         topicRepository.save(topic);
         return topicMapper.toDTO(topic);
     }

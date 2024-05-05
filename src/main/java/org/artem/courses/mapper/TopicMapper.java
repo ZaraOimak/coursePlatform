@@ -20,6 +20,8 @@ public abstract class TopicMapper {
     private TopicRepository topicRepository;
     @Autowired
     private SectionRepository sectionRepository;
+    @Autowired
+    private BlockMapper blockMapper;
 
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
@@ -35,7 +37,6 @@ public abstract class TopicMapper {
     public abstract TopicDTO toDTO(Topic topic);
 
     protected List<Block> updateBlocks(TopicDTO topicDTO, @MappingTarget Topic entity) {
-        BlockMapper blockMapper = Mappers.getMapper(BlockMapper.class);
         if (topicDTO.getBlocks() == null) {
             return entity.getBlocks();
         }
