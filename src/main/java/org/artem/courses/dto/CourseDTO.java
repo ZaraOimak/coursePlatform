@@ -4,11 +4,12 @@ import java.util.List;
 import java.util.UUID;
 
 public class CourseDTO {
+    private UUID uuid;
     private String name;
     private String description;
     private UUID authorUuid;
-    private UUID uuid;
     private List<SectionDTO> sections;
+    private String thumbnailUrl;
 
     public UUID getUuid() {
         return uuid;
@@ -50,5 +51,11 @@ public class CourseDTO {
     public void setDescription(String description) {
         this.description = description;
     }
+    public String getThumbnailUrl() {
+        return thumbnailUrl;
+    }
 
+    public void setThumbnailUrl(String thumbnailUrl) {
+        this.thumbnailUrl = thumbnailUrl;
+    }
 }
