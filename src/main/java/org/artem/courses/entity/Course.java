@@ -1,13 +1,34 @@
 package org.artem.courses.entity;
 
-import java.util.List;
+import jakarta.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
+
+@Entity
 public class Course {
+    @Id
+    @GeneratedValue
     private Integer id;
+    private UUID uuid;
     private String name;
     private String description;
-    private List<Section> sections;
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "course")
+    private List<Section> sections = new ArrayList<>();
+    @ManyToOne
+    @JoinColumn(name = "author_id", referencedColumnName = "id")
     private Author author;
+
+    private String thumbnailUrl;
+
+    public UUID getUuid() {
+        return uuid;
+    }
+
+    public void setUuid(UUID uuid) {
+        this.uuid = uuid;
+    }
 
     public Integer getId() {
         return id;
@@ -47,5 +68,13 @@ public class Course {
 
     public void setAuthor(Author author) {
         this.author = author;
+    }
+
+    public String getThumbnailUrl() {
+        return thumbnailUrl;
+    }
+
+    public void setThumbnailUrl(String thumbnailUrl) {
+        this.thumbnailUrl = thumbnailUrl;
     }
 }

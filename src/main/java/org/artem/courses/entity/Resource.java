@@ -1,10 +1,31 @@
 package org.artem.courses.entity;
+
+import jakarta.persistence.*;
+
+import java.util.UUID;
+
+@Entity
 public class Resource {
+    @ManyToOne
+    @JoinColumn(name = "block_id",referencedColumnName = "id")
     private Block parent;
+    @Id
+    @GeneratedValue
     private Integer id;
-    private Integer order;
+    private UUID uuid;
+    private Integer position;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "type")
     private ResourceType resourceType;
     private String content;
+
+    public UUID getUuid() {
+        return uuid;
+    }
+
+    public void setUuid(UUID uuid) {
+        this.uuid = uuid;
+    }
 
     public Block getParent() {
         return parent;
@@ -30,12 +51,12 @@ public class Resource {
         this.resourceType = resourceType;
     }
 
-    public Integer getOrder() {
-        return order;
+    public Integer getPosition() {
+        return position;
     }
 
-    public void setOrder(Integer order) {
-        this.order = order;
+    public void setPosition(Integer position) {
+        this.position = position;
     }
 
     public String getContent() {
