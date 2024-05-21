@@ -43,7 +43,6 @@ public class DefaultCourseService implements CourseService {
     @Transactional
     public Course update(Course course) {
         if (course.getUuid() == null) {
-//            course.getAuthor().getCourses().add(course);
             course.setUuid(UUID.randomUUID());
         } else {
             Course saved = courseRepository.getByUuid(course.getUuid());
