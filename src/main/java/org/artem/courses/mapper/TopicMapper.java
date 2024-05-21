@@ -12,7 +12,10 @@ import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 @Mapper(componentModel = "spring", uses = BlockMapper.class)
 public abstract class TopicMapper {
@@ -44,18 +47,29 @@ public abstract class TopicMapper {
         if (topicDTO.getBlocks().isEmpty()) {
             blocks.clear();
         } else {
-            List<UUID> uuids = topicDTO.getBlocks().stream().map(BlockDTO::getUuid).toList();
-            blocks.removeIf(block -> !uuids.contains(block.getUuid()));
+            Set<UUID> updatedUuids = topicDTO.getBlocks().stream().map(BlockDTO::getUuid).collect(Collectors.toSet());
+
 
             for (BlockDTO blockDTO : topicDTO.getBlocks()) {
                 Block block = getOrCreateBlock(entity, blockDTO.getUuid());
                 blockMapper.updateBlockFromDTO(blockDTO, block);
                 if (block.getId() == null) {
+                    updatedUuids.add(block.getUuid());
                     blocks.add(block);
                 }
             }
+            deleteRemovedBlocks(blocks,blocks.stream().map(Block::getUuid).filter(Predicate.not(updatedUuids::contains)).toList());
         }
         return blocks;
+    }
+
+    private void deleteRemovedBlocks(List<Block> blocks, List<UUID> uuidsToRemove) {
+        for(UUID uuid : uuidsToRemove){
+            Block block = blocks.stream().filter(it -> uuid.equals(it.getUuid())).findFirst().orElseThrow();
+            Integer position = block.getPosition();
+            blocks.remove(block);
+            blocks.stream().filter(it -> it.getPosition() > position).forEach(it -> it.setPosition(it.getPosition()-1));
+        }
     }
 
     private static Block getOrCreateBlock(Topic topic, UUID blockUuid) {

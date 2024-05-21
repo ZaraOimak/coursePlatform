@@ -11,7 +11,10 @@ import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 @Mapper(componentModel = "spring", uses = SectionMapper.class)
 public abstract class CourseMapper {
@@ -37,18 +40,28 @@ public abstract class CourseMapper {
         if (courseDTO.getSections().isEmpty()) {
             sections.clear();
         } else {
-            List<UUID> uuids = courseDTO.getSections().stream().map(SectionDTO::getUuid).toList();
-            sections.removeIf(section -> !uuids.contains(section.getUuid()));
+            Set<UUID> updatedUuids = courseDTO.getSections().stream().map(SectionDTO::getUuid).collect(Collectors.toSet());
 
             for (SectionDTO sectionDTO : courseDTO.getSections()) {
                 Section section = getOrCreateSection(entity, sectionDTO.getUuid());
                 sectionMapper.updateSectionFromDto(sectionDTO, section);
                 if (section.getId() == null) {
+                    updatedUuids.add(section.getUuid());
                     sections.add(section);
                 }
             }
+            deleteRemovedSections(sections,sections.stream().map(Section::getUuid).filter(Predicate.not(updatedUuids::contains)).toList());
         }
         return sections;
+    }
+
+    private void deleteRemovedSections(List<Section> sections, List<UUID> uuidsToRemove) {
+        for(UUID uuid : uuidsToRemove){
+            Section section = sections.stream().filter(it -> uuid.equals(it.getUuid())).findFirst().orElseThrow();
+            Integer position = section.getPosition();
+            sections.remove(section);
+            sections.stream().filter(it -> it.getPosition() > position).forEach(it -> it.setPosition(it.getPosition()-1));
+        }
     }
 
     private Section getOrCreateSection(Course course, UUID sectionUuid) {

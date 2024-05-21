@@ -8,6 +8,7 @@ import org.artem.courses.service.TopicService;
 import org.mapstruct.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -42,6 +43,7 @@ public abstract class SectionMapper {
             return null;
         }
         return topics.stream()
+                .sorted(Comparator.comparingInt(Topic::getPosition))
                 .map(Topic::getUuid)
                 .collect(Collectors.toList());
     }

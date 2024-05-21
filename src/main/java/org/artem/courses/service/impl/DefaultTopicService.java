@@ -37,10 +37,35 @@ public class DefaultTopicService implements TopicService {
         Topic topic = topicRepository.getByUuid(uuid);
         if (topic != null) {
             topic.getSection().getTopics().remove(topic);
+            remove(topic);
             topicRepository.delete(topic);
         }
-        topicRepository.deleteByUuid(uuid);
     }
+
+    private void remove(Topic topic) {
+        Topic prev = topic.getPrevious();
+        Topic next = topic.getNext();
+        if(prev != null){
+            prev.setNext(next);
+            if(next != null){
+                next.setPrevious(prev);
+            }
+        } else {
+            next.setPrevious(null);
+        }
+        shiftNextTopics(next);
+    }
+
+    private void shiftNextTopics(Topic next) {
+        if(next == null){
+            return;
+        }
+        do {
+            next.setPosition(next.getPosition()-1);
+            next = next.getNext();
+        } while(next != null);
+    }
+
 
     @Override
     @Transactional
