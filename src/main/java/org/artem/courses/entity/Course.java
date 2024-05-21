@@ -20,6 +20,8 @@ public class Course {
     @JoinColumn(name = "author_id", referencedColumnName = "id")
     private Author author;
 
+    private String thumbnailUrl;
+
     public UUID getUuid() {
         return uuid;
     }
@@ -66,5 +68,13 @@ public class Course {
 
     public void setAuthor(Author author) {
         this.author = author;
+    }
+
+    public String getThumbnailUrl() {
+        return thumbnailUrl;
+    }
+
+    public void setThumbnailUrl(String thumbnailUrl) {
+        this.thumbnailUrl = thumbnailUrl;
     }
 }

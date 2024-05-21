@@ -1,6 +1,7 @@
 package org.artem.courses.entity;
 
 import jakarta.persistence.*;
+import jdk.jfr.DataAmount;
 
 import java.util.ArrayList;
 import java.util.List;
