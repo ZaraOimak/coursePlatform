@@ -10,7 +10,7 @@ FROM openjdk:21-slim
 
 WORKDIR /app
 
-COPY --from=builder /app/target/coursePlatform*.jar /app/app.jar
+COPY --from=builder /app/target/coursePlatform*-spring-boot.jar /app/app.jar
 
 # Expose the port the app runs on
 EXPOSE 8080
