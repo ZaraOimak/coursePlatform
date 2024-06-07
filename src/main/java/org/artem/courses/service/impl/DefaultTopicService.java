@@ -50,7 +50,7 @@ public class DefaultTopicService implements TopicService {
             if(next != null){
                 next.setPrevious(prev);
             }
-        } else {
+        } else if(next != null) {
             next.setPrevious(null);
         }
         shiftNextTopics(next);
