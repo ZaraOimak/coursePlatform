@@ -13,6 +13,8 @@ public class Author {
     private Integer id;
     private UUID uuid;
     private String name;
+    private String avatar;
+
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "author")
     private List<Course> courses = new ArrayList<>();
 
@@ -47,5 +49,13 @@ public class Author {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
     }
 }
